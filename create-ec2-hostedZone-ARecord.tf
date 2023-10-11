@@ -14,18 +14,18 @@ provider "aws" {
 }
 
 #------------------------
-# Update the default VPC security group
+# Update the default VPC security group. Need to hardcode default VPC 'vpc_id'parameter
 #------------------------
 # This works
 
 resource "aws_default_security_group" "default" {
-vpc_id = "vpc-026ecc2b2d5c3fb8a"
+vpc_id = "vpc-0ee80bdc6fafe215c"
 
   ingress {
     description    = "Allow TCP inbound on port 22"
     protocol       = "tcp"
     cidr_blocks    = ["0.0.0.0/0"]
-  # from_port      = 0
+    from_port      = 0
     to_port        = 22
   }
 
@@ -70,17 +70,5 @@ resource "aws_route53_record" "www" {
   type    = "A"
   ttl     = 300
   records = [aws_instance.trevor_server.public_ip]
+  # records = ["1.2.3.4"]
 }
-
-#------------------------------------------------------------------
-# Create Test A record pointing to my 'TrevorWaslshArt' Lightsail instance
-#------------------------------------------------------------------
-resource "aws_route53_record" "twart" {
-  zone_id = aws_route53_zone.primary.zone_id
-  name    = "twart.walshtrev.com"
-  type    = "A"
-  ttl     = 300
-  records = ["52.209.123.222"]
-}
-
-# records = ["1.2.3.4"]
