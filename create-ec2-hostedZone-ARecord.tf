@@ -38,7 +38,6 @@ vpc_id = "vpc-026ecc2b2d5c3fb8a"
 
 }
 
-
 #------------------------
 # Create EC2 instance
 #------------------------
@@ -62,15 +61,26 @@ resource "aws_route53_zone" "primary" {
   }
 }
 
-#------------------------
-# Create A record in public hosted zone
-#------------------------
+#----------------------------------------------------------------------------------------------------
+# Create A record in public hosted zone. The public IP of the "trevor_server" will be added as A record value
+#----------------------------------------------------------------------------------------------------
 resource "aws_route53_record" "www" {
   zone_id = aws_route53_zone.primary.zone_id
-  name    = "www.walshtrev.com"
+  name    = "walshtrev.com"
   type    = "A"
   ttl     = 300
   records = [aws_instance.trevor_server.public_ip]
+}
+
+#------------------------------------------------------------------
+# Create Test A record pointing to my 'TrevorWaslshArt' Lightsail instance
+#------------------------------------------------------------------
+resource "aws_route53_record" "twart" {
+  zone_id = aws_route53_zone.primary.zone_id
+  name    = "twart.walshtrev.com"
+  type    = "A"
+  ttl     = 300
+  records = ["52.209.123.222"]
 }
 
 # records = ["1.2.3.4"]
