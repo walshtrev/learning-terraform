@@ -14,7 +14,7 @@ provider "aws" {
 }
 
 #------------------------
-# Update the default VPC security group. Need to hardcode default VPC 'vpc_id'parameter
+# Update the default VPC security group. Need to hardcode default VPC 'vpc_id' parameter
 #------------------------
 # This works
 
